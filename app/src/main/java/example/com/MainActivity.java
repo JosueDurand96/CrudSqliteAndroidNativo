@@ -1,6 +1,7 @@
 package example.com;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-  Button btnGuardar;
+  Button btnGuardar,btnBuscar;
   EditText etId,etNombres,etTelefono;
   TextView textView4;
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     etNombres=(EditText)findViewById(R.id.etNombres);
     etTelefono=(EditText)findViewById(R.id.etTelefono);
     btnGuardar=(Button)findViewById(R.id.btnGuardar);
+    btnBuscar=(Button)findViewById(R.id.btnBuscar);
     textView4=(TextView)findViewById(R.id.textView4);
 
     final PersonaBD personaBD = new PersonaBD(getApplicationContext());
@@ -41,5 +43,23 @@ public class MainActivity extends AppCompatActivity {
         textView4.setText(IdGuardado.toString());
       }
     });
+
+    btnBuscar.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        SQLiteDatabase db = personaBD.getReadableDatabase();
+        String[] argsel = {etId.getText().toString()};
+        String[] projection ={PersonaBD.DatosTabla.COLUMNA_NOMBRES,PersonaBD.DatosTabla.COLUMNA_TELEFONOS};
+        Cursor c = db.query(PersonaBD.DatosTabla.NOMBRE_TABLA,projection,PersonaBD.DatosTabla.COLUMNA_ID+"=?",argsel,null,null,null);
+
+        c.moveToFirst();
+        etNombres.setText(c.getString(0));
+        etTelefono.setText(c.getString(1));
+
+
+      }
+    });
+
+
   }
 }
