@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
   Button btnGuardar;
   EditText etId,etNombres,etTelefono;
+  TextView textView4;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     etNombres=(EditText)findViewById(R.id.etNombres);
     etTelefono=(EditText)findViewById(R.id.etTelefono);
     btnGuardar=(Button)findViewById(R.id.btnGuardar);
+    textView4=(TextView)findViewById(R.id.textView4);
 
     final PersonaBD personaBD = new PersonaBD(getApplicationContext());
     btnGuardar.setOnClickListener(new View.OnClickListener() {
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         Long IdGuardado = db.insert(PersonaBD.DatosTabla.NOMBRE_TABLA,PersonaBD.DatosTabla.COLUMNA_ID,valores);
         Toast.makeText(MainActivity.this, "SE REGISTRO "+IdGuardado, Toast.LENGTH_SHORT).show();
-
+        textView4.setText(IdGuardado.toString());
       }
     });
   }
