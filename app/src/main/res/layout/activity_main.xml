@@ -100,8 +100,32 @@
     android:id="@+id/btnBuscar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:text="BUSCAR"
-    tools:layout_editor_absoluteX="29dp"
+    app:layout_constraintEnd_toStartOf="@+id/btnBorrar"
+    app:layout_constraintHorizontal_bias="0.165"
+    app:layout_constraintStart_toStartOf="parent"
     tools:layout_editor_absoluteY="427dp" />
+
+  <Button
+    android:id="@+id/btnBorrar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="52dp"
+    android:layout_marginEnd="64dp"
+    android:text="BORRAR"
+    app:layout_constraintEnd_toStartOf="@+id/btnActualizar"
+    app:layout_constraintTop_toBottomOf="@+id/btnGuardar" />
+
+  <Button
+    android:id="@+id/btnActualizar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="424dp"
+    android:layout_marginEnd="28dp"
+    android:text="ACTUALIZAR"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

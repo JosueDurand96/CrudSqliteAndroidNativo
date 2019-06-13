@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Selection;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-  Button btnGuardar,btnBuscar;
+  Button btnGuardar,btnBuscar,btnBorrar,btnActualizar;
   EditText etId,etNombres,etTelefono;
   TextView textView4;
 
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     etTelefono=(EditText)findViewById(R.id.etTelefono);
     btnGuardar=(Button)findViewById(R.id.btnGuardar);
     btnBuscar=(Button)findViewById(R.id.btnBuscar);
+    btnActualizar=(Button)findViewById(R.id.btnActualizar);
+    btnBorrar=(Button)findViewById(R.id.btnBorrar);
     textView4=(TextView)findViewById(R.id.textView4);
 
     final PersonaBD personaBD = new PersonaBD(getApplicationContext());
@@ -44,6 +47,17 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
+    btnBorrar.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        SQLiteDatabase db = personaBD.getWritableDatabase();
+        String selection = PersonaBD.DatosTabla.COLUMNA_ID+"=?";
+        String[] argsel={etId.getText().toString()};
+
+        db.delete(PersonaBD.DatosTabla.NOMBRE_TABLA,selection,argsel);
+      }
+    });
+
     btnBuscar.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -59,7 +73,19 @@ public class MainActivity extends AppCompatActivity {
 
       }
     });
+    btnActualizar.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        SQLiteDatabase db = personaBD.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        valores.put(PersonaBD.DatosTabla.COLUMNA_NOMBRES,etNombres.getText().toString());
+        valores.put(PersonaBD.DatosTabla.COLUMNA_TELEFONOS,etTelefono.getText().toString());
+        String[] argsel={etId.getText().toString()};
+        String Selection = PersonaBD.DatosTabla.COLUMNA_ID+"=?";
 
+        int count = db.update(PersonaBD.DatosTabla.NOMBRE_TABLA,valores,Selection,argsel);
+      }
+    });
 
   }
 }
